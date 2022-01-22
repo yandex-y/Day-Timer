@@ -13,66 +13,79 @@
 *{
     border: none;
     outline: none;
-}
-body{
     margin: 0;
     padding: 0;
+}
+:root{
     background-image: linear-gradient(#FF5665,#677DFF);
+    font-size: 18px;
 }
 h1{
     font-family: 'Poppins-SemiBold';
     text-align: center;
-    font-size: 4.1rem;
-    margin: 15vh 0 2rem;
+    font-size: 3rem;
+    margin: calc(25vh - 8rem) 0 0;
     color: white;
-    text-shadow: 1px 2px 7px rgba(0,0,0,.3);;
+    text-shadow: 1px 2px 7px rgba(0,0,0,.3);
 }
 .content{
     text-align: center;
     background-color: #E4EAFF;
-    margin: 0 auto;
-    width: 35rem;
+    margin: 8rem auto ;
+    width: 74vw;
+    max-width: 42rem;
     padding: 4rem 4rem;
     border-radius: .6rem;
     border-top: 1.75rem solid white;
 }
-.input_form :nth-child(2){
-    margin: 0 1.75rem;
-    width: 12.75rem;
+.input_form{
+    display: flex;
+    justify-content: center;
+    gap: .8rem;
 }
-.input, button{
+.input_form > *{
+    background-color: white;
+    color: gray;
+    font-size: 2rem;
+    padding: 1.5rem;
+    transition: 0.3s;
+    width: 13rem;
+}
+.input_form > *, button{
     text-align: center;
     border-radius: .4rem;
     font-family: 'Poppins-Medium';
 }
-.input{
-    background-color: white;
-    color: gray;
-    font-size: 1.3rem;
-    width: 9rem;
-    padding: 2rem 1rem;
-    transition: 300ms;
+.input_form :nth-child(2){
+    text-align: justify;
 }
-.dateYear:focus{
+.input_form :nth-child(1):focus,.input_form :nth-child(3):focus{
     transform: scale(1.2);
     font-size: 1.5rem;
 }
-.input, .button button{
+.input_form > *, .button button{
     box-shadow: 1px 2px 4px rgba(0,0,0,.3);
 }
 .button{
     margin: 2.8rem 0;
+    display: flex;
+    justify-content: center;
+    gap: .8rem;
 }
-.button button{
-    font-size: 1.1rem;
-    padding: .8rem;
+.button > *{
+    font-size: 1.3rem;
+    padding: 1rem;
     font-family: 'Poppins-Regular';
     background-color: #FF5665;
-    margin: 0 .7rem;
     color: #E4EAFF;
 }
 .display{
     font-family: 'Poppins-Medium';
     color: rgba(255,86,101,.75);
-    font-size: 1.55rem;
+    font-size: 1.8rem;
+}
+@media (min-width:990px){
+    :root{
+        font-size: 9px;
+    }
 }

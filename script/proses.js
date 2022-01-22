@@ -1,18 +1,34 @@
-function hitung() {
-    var inp_year = document.getElementById("inp_year").value;
-    var inp_month = document.getElementById("inp_month").value;
-    var inp_date = document.getElementById("inp_date").value;
-    
-    let dateNow = new Date();
-    var inp_hours = dateNow.getHours();
-    var inp_minutes = dateNow.getMinutes();
-    var inp_seconds = dateNow.getSeconds();
-    var inp_milliseconds = dateNow.getMilliseconds()
+// Variabel
+let x = () => new Date(),
+inp_date = document.getElementById('inp_date'),
+inp_month = document.getElementById('inp_month'),
+inp_year = document.getElementById('inp_year'),
+ResetToNow = document.querySelector('.ResetToNow'),
+resetAll = document.querySelector('.ResetAll');
 
-    let waktuTarget = new Date(parseInt(inp_year), parseInt(inp_month), parseInt(inp_date), inp_hours, inp_minutes, inp_seconds, inp_milliseconds).getTime();
-    
-    let waktuNow = dateNow.getTime();
-    let selisih = waktuTarget - waktuNow;
+// Event Listener
+ResetToNow.addEventListener('click', defaultInp);
+
+resetAll.addEventListener('click', nullInp)
+
+// Run Function 
+defaultInp()
+
+// Function
+function defaultInp(){
+    inp_date.value = x().getDate();
+    inp_month.value = x().getMonth();
+    inp_year.value = x().getFullYear();
+}
+function nullInp(){
+    inp_date.value = null;
+    inp_month.value = null;
+    inp_year.value = null;
+}
+function hitung() {
+    let waktuTarget = new Date(parseInt(inp_year.value), parseInt(inp_month.value), parseInt(inp_date.value),  x().getHours(), x().getMinutes(), x().getSeconds(), x().getMilliseconds()).getTime(),
+    waktuNow = x().getTime(),
+    selisih = waktuTarget - waktuNow;
 
     let toDay = selisih / 1000 / 60 / 60 / 24;
     let toMonth, toYear;
@@ -61,7 +77,7 @@ function hitung() {
         outDay = 0
     }
     
-    if (inp_date == "" || inp_month == "" || inp_year == "") {
+    if (inp_date.value == "" || inp_month.value == "" || inp_year.value == "") {
         output = `Input Waktu Dengan Benar`
     } else if (kondisi == 0) {
         output = `Now`
