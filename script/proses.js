@@ -1,91 +1,85 @@
 // Variabel
 let x = () => new Date(),
-inp_date = document.getElementById('inp_date'),
-inp_month = document.getElementById('inp_month'),
-inp_year = document.getElementById('inp_year'),
+inp = [document.getElementById('inp_date'),document.getElementById('inp_month'),document.getElementById('inp_year')],
 ResetToNow = document.querySelector('.ResetToNow'),
 resetAll = document.querySelector('.ResetAll');
 
 // Event Listener
 ResetToNow.addEventListener('click', defaultInp);
+resetAll.addEventListener('click', nullInp);
 
-resetAll.addEventListener('click', nullInp)
+inp[0].addEventListener('keyup',() => {
+    hitung(inp[2].value,inp[1].value,inp[0].value)
+})
+inp[1].addEventListener('change',() => {
+    hitung(inp[2].value,inp[1].value,inp[0].value)
+})
+inp[2].addEventListener('keyup',() => {
+    hitung(inp[2].value,inp[1].value,inp[0].value)
+})
 
 // Run Function 
 defaultInp()
+hitung(inp[2].value,inp[1].value,inp[0].value)
 
 // Function
 function defaultInp(){
-    inp_date.value = x().getDate();
-    inp_month.value = x().getMonth();
-    inp_year.value = x().getFullYear();
+    inp[0].value = x().getDate();
+    inp[1].value = x().getMonth();
+    inp[2].value = x().getFullYear();
+    hitung(inp[2].value,inp[1].value,inp[0].value)
+    
 }
 function nullInp(){
-    inp_date.value = null;
-    inp_month.value = null;
-    inp_year.value = null;
+    inp[0].value = null;
+    inp[1].value = null;
+    inp[2].value = null;
+    hitung(inp[2].value,inp[1].value,inp[0].value)
 }
-function hitung() {
-    let waktuTarget = new Date(parseInt(inp_year.value), parseInt(inp_month.value), parseInt(inp_date.value),  x().getHours(), x().getMinutes(), x().getSeconds(), x().getMilliseconds()).getTime(),
+function hitung(year,month,date) {
+    
+    //variabel
+    let waktuTarget = new Date(parseInt(year), parseInt(month), parseInt(date),  x().getHours(), x().getMinutes(), x().getSeconds(), x().getMilliseconds()).getTime(),
     waktuNow = x().getTime(),
-    selisih = waktuTarget - waktuNow;
-
-    let toDay = selisih / 1000 / 60 / 60 / 24;
-    let toMonth, toYear;
-    let kondisi = Math.sign(selisih)
-
-    let output, kondisiAkhir;
-
-    if (kondisi == 1) {
-        toMonth = Math.floor(toDay / 30);
-        toYear = Math.floor(toMonth / 12)
-
-        if (toMonth != 0) {
-            toDay -= toMonth * 30
+    selisih = waktuTarget - waktuNow,
+    selisihHari = function (){
+        if (Math.sign(selisih) == 1) {
+            return [Math.ceil(selisih / 1000 / 60 / 60 / 24), " Lagi"]
+        }else {
+            return [Math.ceil(selisih * -1 / 1000 / 60 / 60 / 24), " Yang Lalu"]
         }
-        if (toYear != 0) {
-            toMonth -= toYear * 12
-        }
-        kondisiAkhir = "Lagi"
-    } else if (kondisi == -1) {
-        toDay *= -1
+    },
+    tahun,bulan,hari,
+    dateArr = [
+        tahun = Math.floor(selisihHari()[0] / 30 / 12),
+        bulan = Math.floor(selisihHari()[0] / 30 - (tahun * 12)),
+        hari = selisihHari()[0] - (bulan * 30) - (tahun * 12 * 30)
+        ],
+        dateStr = [" Tahun"," Bulan"," Hari"],
+        num = 0,
+        str = "";
+        
+        
+        dateArr.forEach((x) => {
+            
+            if(x != 0){
+                str += x + dateStr[num] + " "
+            }
+            num++
+        })
 
-        toMonth = Math.floor(toDay / 30);
-        toYear = Math.floor(toMonth / 12)
-
-        if (toMonth != 0) {
-            toDay -= toMonth * 30
-        }
-        if (toYear != 0) {
-            toMonth -= toYear * 12
-        }
-        kondisiAkhir = "Yang Lalu"
-
-    }
-    
-    let outYear = toYear + " Tahun";
-    let outMonth = toMonth + " Bulan";
-    let outDay = toDay + " Hari";
-    
-    if(toYear==0){
-        outYear = ""
-    }
-    if(toMonth==0){
-        outMonth = ""
-    }
-    if(toDay==0){
-        outDay = 0
-    }
-    
-    if (inp_date.value == "" || inp_month.value == "" || inp_year.value == "") {
+        str += selisihHari()[1]
+        
+        
+        
+        if (year == "" || month == "" || date == "") {
         output = `Input Waktu Dengan Benar`
-    } else if (kondisi == 0) {
+    } else if (selisih == 0) {
         output = `Now`
     }else{
-        output = `${outYear} ${outMonth} ${outDay} ${kondisiAkhir}`
+        output = str
     }
 
     document.querySelector('.display').innerHTML = output
 
 }
-setInterval(hitung, 225)
