@@ -1,38 +1,71 @@
 <html>
-    <head>
-        <title>Estimasi Hari</title>
-        <link rel="stylesheet" href="style/style.css">
-    </head>
-    <body>
-        <h1>Estimasi Hari</h1>
-        <div class="content">
-            <div class="input_form">
-                <input type="number" id="inp_date" placeholder="Tanggal">
-                <select id="inp_month">
-                    <option value="0">1 - Januari</option>
-                    <option value="1">2 - Februari</option>
-                    <option value="2">3 - Maret</option>
-                    <option value="3">4 - April</option>
-                    <option value="4">5 - Mei</option>
-                    <option value="5">6 - Juni</option>
-                    <option value="6">7 - Juli</option>
-                    <option value="7">8 - Agustus</option>
-                    <option value="8">9 - September</option>
-                    <option value="9">10 - Oktober</option>
-                    <option value="10">11 - November</option>
-                    <option value="11">12 - Desember</option>
-                </select>
-                <input type="number" id="inp_year" placeholder="Tahun">
-            </div>
-            
-            <div class="button">
-                <button class="ResetToNow">Reset To Now</button>
-                <button class="ResetAll">Reset All</button>
-            </div>
-            <div class="display"></div>
+<head>
+    <title>Day Timer</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <h1>Day Timer</h1>
+    <div class="content">
+        <div class="input_form">
+            <input type="text" placeholder="Label" id="label" class="label">
+            <input type="number" id="inp_date" placeholder="Tanggal">
+            <select id="inp_month">
+                <option value="0">1 - Januari</option>
+                <option value="1">2 - Februari</option>
+                <option value="2">3 - Maret</option>
+                <option value="3">4 - April</option>
+                <option value="4">5 - Mei</option>
+                <option value="5">6 - Juni</option>
+                <option value="6">7 - Juli</option>
+                <option value="7">8 - Agustus</option>
+                <option value="8">9 - September</option>
+                <option value="9">10 - Oktober</option>
+                <option value="10">11 - November</option>
+                <option value="11">12 - Desember</option>
+            </select>
+            <input type="number" id="inp_year" placeholder="Tahun">
         </div>
 
+        <div class="button">
+            <button id="reset-inp-to-now">Reset To Now</button>
+            <button id="reset-inp-all">Reset All</button>
+            <button id="update-data">Update</button>
+        </div>
+        <div class="display"></div>
+
+        <div class="expand">
+            <h1 id="expand">&#8595;</h1>
+
+            <div class="container-expand">
+
+                <input type="search" id="box-search-items" placeholder="Search...">
+                <button id="hide-item" class="hidden">hide</button>
+                
+                <p id="txt-total-item" class="txt-total-item"></p>
+
+                <div class="container-expand-list">
+                    <!--
+                                        <div id="i0">
+                                            <p>
+                                                default
+                                            </p>
+                                            <p>
+                                                12 Juli 2022
+                                            </p>
+                                            <span>Now</span>
+                                        </div>-->
+                </div>
+                <p class="delete-all-item" id="btn-del-all-items">
+                    HAPUS SEMUA
+                </p>
+
+            </div>
+
+        </div>
+    </div>
     
-            <script src="script/proses.js"></script>
-    </body>
+    <p id="xnxx"></p>
+
+    <script src="script/proses.js"></script>
+</body>
 </html>
