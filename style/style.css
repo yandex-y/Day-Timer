@@ -1,26 +1,27 @@
-@font-face{
+@font-face {
     font-family: 'Poppins-SemiBold';
     src: url('../fonts/Poppins-SemiBold.woff')
 }
-@font-face{
+@font-face {
     font-family: 'Poppins-Medium';
     src: url('../fonts/Poppins-Medium.woff')
 }
-@font-face{
+@font-face {
     font-family: 'Poppins-Regular';
     src: url('../fonts/Poppins-Regular.woff')
 }
-*{
+* {
     border: none;
     outline: none;
     margin: 0;
     padding: 0;
+    user-select: none;
 }
-:root{
+:root {
     background-image: linear-gradient(#FF5665,#677DFF);
     font-size: 18px;
 }
-h1{
+body > h1 {
     font-family: 'Poppins-SemiBold';
     text-align: center;
     font-size: 3rem;
@@ -28,22 +29,26 @@ h1{
     color: white;
     text-shadow: 1px 2px 7px rgba(0,0,0,.3);
 }
-.content{
-    text-align: center;
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    align-items: center;
     background-color: #E4EAFF;
-    margin: 8rem auto ;
+    margin: 8rem auto;
     width: 74vw;
     max-width: 42rem;
     padding: 4rem 4rem;
     border-radius: .6rem;
     border-top: 1.75rem solid white;
 }
-.input_form{
+.input_form {
     display: flex;
     justify-content: center;
     gap: .8rem;
+    flex-wrap: wrap;
 }
-.input_form > *{
+.input_form > * {
     background-color: white;
     color: gray;
     font-size: 2rem;
@@ -51,41 +56,103 @@ h1{
     transition: 0.3s;
     width: 13rem;
 }
-.input_form > *, button{
+::placeholder {
+    color: rgba(0,0,0,.1);
+}
+.input_form > *, button {
     text-align: center;
     border-radius: .4rem;
     font-family: 'Poppins-Medium';
 }
-.input_form :nth-child(2){
+.input_form :nth-child(3) {
     text-align: justify;
 }
-.input_form :nth-child(1):focus,.input_form :nth-child(3):focus{
-    transform: scale(1.2);
-    font-size: 1.5rem;
-}
-.input_form > *, .button button{
+.input_form > *, .button button {
     box-shadow: 1px 2px 4px rgba(0,0,0,.3);
 }
-.button{
-    margin: 2.8rem 0;
+.button {
     display: flex;
     justify-content: center;
     gap: .8rem;
 }
-.button > *{
+.button > * {
     font-size: 1.3rem;
     padding: 1rem;
     font-family: 'Poppins-Regular';
     background-color: #FF5665;
     color: #E4EAFF;
 }
-.display{
+.display {
     font-family: 'Poppins-Medium';
     color: rgba(255,86,101,.75);
     font-size: 1.8rem;
 }
-@media (min-width:990px){
-    :root{
+.expand {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.8rem;
+    font-family: 'Poppins-Medium';
+    color: rgba(255,86,101,.75);
+}
+.expand > h1 {
+    margin: 150px 0;
+}
+.container-expand {
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 35px;
+    justify-content: center;
+    align-items: center;
+
+}
+.container-expand.show {
+    display: flex;
+}
+.txt-total-item{
+    font-weight: bold;
+    font-size: 2.3rem;
+    margin:  7px 0;
+}
+input[type=search] {
+    padding: 23px 27px;
+    font-size: 2.1rem;
+    font-family: inherit;
+    border-radius: 5px;
+    color: gray;
+    box-shadow: -4px 4px 6px rgba(0,0,0,.17);
+}
+.container-expand button{
+    background-color: rgb(255,86,101);
+    color: white;
+    padding: 14px 22px;
+    border-radius: 5px;
+    margin: 50px 0;
+    font-size: 1.3rem;
+}
+.container-expand-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+.before {
+    color: rgba(255,86,101,.37);
+}
+.container-expand-list > div > p:first-child {
+    font-weight: bold;
+}
+.delete-all-item {
+    background-color: rgb(255,86,101);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    margin-top: 35px;
+}
+
+
+@media (min-width:990px) {
+:root {
         font-size: 9px;
     }
 }
