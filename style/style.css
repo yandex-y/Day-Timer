@@ -110,10 +110,10 @@ body > h1 {
 .container-expand.show {
     display: flex;
 }
-.txt-total-item{
+.txt-total-item {
     font-weight: bold;
     font-size: 2.3rem;
-    margin:  7px 0;
+    margin: 7px 0;
 }
 input[type=search] {
     padding: 23px 27px;
@@ -123,7 +123,7 @@ input[type=search] {
     color: gray;
     box-shadow: -4px 4px 6px rgba(0,0,0,.17);
 }
-.container-expand button{
+.container-expand button {
     background-color: rgb(255,86,101);
     color: white;
     padding: 14px 22px;
@@ -149,7 +149,41 @@ input[type=search] {
     border-radius: 5px;
     margin-top: 35px;
 }
-
+.btn-update-data {
+    position: absolute;
+    top: 35px;
+    right: 42px;
+    padding: .8rem 1rem;
+    font-size: 1.3rem;
+    color: #FF5665;
+}
+.container-update-data {
+    position: absolute;
+    background: #fff;
+    top: 35px;
+    right: 42px;
+    z-index: 4;
+    padding: 2rem;
+    font-size: 1.5rem;
+    font-family: 'Poppins-Medium';
+    display: flex;
+    display: none;
+    flex-direction: column;
+    gap: 1.1rem;
+    border-radius: 7px;
+}
+.container-update-data.show {
+    display: flex;
+}
+.container-update-data > p {
+    padding: .8rem;
+    text-align: center;
+    border-radius: 6px;
+    color: #FF5665;
+}
+.container-update-data > p:active {
+    background: rgba(0,0,0,.2);
+}
 
 @media (min-width:990px) {
 :root {
