@@ -1,1 +1,1 @@
-"[{"label":"default","year":"2022","month":"6","date":"14","id":0},{"label":"default","year":"2022","month":"6","date":"14","id":1}]"
+{"status":true,"data":{"id":"1301","lokasi":"KOTA JAKARTA","daerah":"DKI JAKARTA","koordinat":{"lat":-6.1700888888888885,"lon":106.83105,"lintang":"6\u00b0 10' 12.32\" S","bujur":"106\u00b0 49' 51.78\" E"},"jadwal":{"tanggal":"Selasa, 05\/07\/2022","imsak":"04:33","subuh":"04:43","terbit":"06:01","dhuha":"06:30","dzuhur":"12:01","ashar":"15:22","maghrib":"17:54","isya":"19:08","date":"2022-07-05"}}}
