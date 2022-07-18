@@ -15,7 +15,11 @@ const container_expand_list = document.querySelector('div.container-expand-list'
 const box_search_items = document.getElementById('box-search-items');
 const btn_del_all_items = document.getElementById('btn-del-all-items');
 const btn_hide_item = document.getElementById('hide-item');
-const txt_total_item = document.getElementById('txt-total-item')
+const txt_total_item = document.getElementById('txt-total-item');
+const btn_update_data = document.getElementById('btn-update-data');
+const container_update_data = document.getElementById('container-update-data');
+const btn_updToServer = document.getElementById('updToServer');
+const btn_updFromServer = document.getElementById('updFromServer');
 
 //for JS
 const str_bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -47,11 +51,31 @@ btn_expand.addEventListener('click', expandElement)
 inp[3].addEventListener('input', (e) => {
     validasiLengthInp(e.target, 25)
 })
+btn_update_data.addEventListener('click', () => {
+    container_update_data.classList.toggle('show')
+})
+btn_updToServer.addEventListener('click', () => {
+    const cek = confirm('Apakah Kamu Akan Mengupdate Data Ke Server?')
+    if (cek) {
+        updToServer()
+    }
+    container_update_data.classList.toggle('show')
+
+})
+btn_updFromServer.addEventListener('click', () => {
+    const cek = confirm('Apakah Kamu Akan Mengupdate Data Dari Server?');
+    if (cek) {
+        updFromServer()
+    }
+    container_update_data.classList.toggle('show')
+
+})
 
 
 
 // Run Function
 disp_result(true)
+style()
 
 
 
@@ -228,7 +252,7 @@ function expandElement() {
 }
 
 function validasiLengthInp(x, maxLength) {
-    x.value.length >= maxLength ? x.value = x.value.substr(0, maxLength) : undefined
+    x.value.length >= maxLength ? x.value = x.value.substr(0, maxLength): undefined
 
     return x.value
 }
@@ -267,9 +291,9 @@ function getDataFromLS() {
 function btn_expand_toggle() {
     if (container_expand.className.includes('show')) {
         btn_expand.innerHTML = '&#8593;'
-        
+
         showHiddenItem()
-        
+
         box_search_items.addEventListener('input', () => {
             runSearch(box_search_items)
         })
@@ -277,7 +301,7 @@ function btn_expand_toggle() {
         btn_del_all_items.addEventListener('click', () => {
             deleteItem(null, true)
         })
-        
+
         btn_hide_item.addEventListener('click', () => {
             btn_hide_item.classList.toggle('hidden')
             showHiddenItem()
@@ -303,7 +327,7 @@ function runSearch(value) {
 function makeId(data) {
     let newId = 0;
     let allid = [];
-    
+
     data.forEach(x => {
         allid.push(x.id)
     })
@@ -316,16 +340,16 @@ function makeId(data) {
 }
 
 function showHiddenItem() {
-    
+
     let data = getDataFromLS();
-    
-    data === null || data.length == 0 ? data = [] : undefined
-    
+
+    data === null || data.length == 0 ? data = []: undefined
+
     if (btn_hide_item.className.includes('hidden')) {
         const newData = [];
 
         data.forEach(x => {
-            !checkBeforeOrAfter(x) ? newData.push(x) : undefined
+            !checkBeforeOrAfter(x) ? newData.push(x): undefined
         })
         btn_hide_item.innerText = 'show'
         innerHTMLExpand(newData)
@@ -339,4 +363,55 @@ function showHiddenItem() {
 
 function checkBeforeOrAfter(x) {
     return new Date(x.year, x.month, x.date, 23, 59, 59, 999).getTime() - new Date().getTime() < 0 ? true: false
+}
+function style() {
+
+    const btn_update_dataCSS = getComputedStyle(btn_update_data)
+
+    container_update_data.style.top = parseInt(btn_update_dataCSS.top) + parseInt(btn_update_dataCSS.height) + parseInt(btn_update_dataCSS.padding)
+    container_update_data.style.right = parseInt(btn_update_dataCSS.right) + parseInt(btn_update_dataCSS.width) + parseInt(btn_update_dataCSS.padding)
+
+
+}
+
+function updToServer() {
+    const data = getDataFromLS()
+    let req = new XMLHttpRequest();
+
+    req.onreadystatechange = () => {
+        if (req.readyState == XMLHttpRequest.DONE) {
+            const pesan = JSON.parse(req.responseText);
+            if ('metadata' in pesan) {
+                alert('SUCCESS UPDATE TO SERVER ID : '+ pesan.metadata.parentId)
+            } else {
+                alert('FAILED UPDATE TO SERVER : ' + pesan.message)
+            }
+        }
+    };
+
+    req.open("PUT", "https://api.jsonbin.io/v3/b/62d5734ab34ef41b73c7124f", true);
+    req.setRequestHeader("Content-Type", "application/json");
+    req.setRequestHeader("X-Master-Key", "$2b$10$ccGM0WKEWD0bdaANFD7LIOqliu3Hy5EaDIntILvgs3hdFm7Egk9Te");
+    req.send(localStorage.getItem('day timer'));
+}
+
+function updFromServer() {
+    let req = new XMLHttpRequest();
+
+    req.onreadystatechange = () => {
+        if (req.readyState == XMLHttpRequest.DONE) {
+            const pesan = JSON.parse(req.responseText);
+            if ('record' in pesan) {
+                const data = pesan.record
+                updateDataToLS(data)
+                window.location.reload()
+            } else {
+                alert('FAILED UPDATE FROM SERVER : ' + pesan.message)
+            }
+        }
+    };
+
+    req.open("GET", "https://api.jsonbin.io/v3/b/62d5734ab34ef41b73c7124f/", true);
+    req.setRequestHeader("X-Master-Key", "$2b$10$ccGM0WKEWD0bdaANFD7LIOqliu3Hy5EaDIntILvgs3hdFm7Egk9Te");
+    req.send();
 }
