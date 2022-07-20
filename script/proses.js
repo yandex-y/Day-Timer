@@ -25,7 +25,6 @@ const btn_updFromServer = document.getElementById('updFromServer');
 const str_bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
 
-
 // Event Listener
 btn_reset_inp_all.addEventListener('click', () => {
     disp_result(false, true)
@@ -57,7 +56,9 @@ btn_update_data.addEventListener('click', () => {
 btn_updToServer.addEventListener('click', () => {
     const cek = confirm('Apakah Kamu Akan Mengupdate Data Ke Server?')
     if (cek) {
-        updToServer()
+        if (confirmAlert(1000, 9999)) {
+            updToServer()
+        }
     }
     container_update_data.classList.toggle('show')
 
@@ -65,7 +66,9 @@ btn_updToServer.addEventListener('click', () => {
 btn_updFromServer.addEventListener('click', () => {
     const cek = confirm('Apakah Kamu Akan Mengupdate Data Dari Server?');
     if (cek) {
-        updFromServer()
+        if (confirmAlert(100, 999)) {
+            updFromServer()
+        }
     }
     container_update_data.classList.toggle('show')
 
@@ -202,7 +205,7 @@ function update(x) {
 }
 
 function innerHTMLExpand(fullData) {
-
+    
     if (fullData === null || fullData.length == 0) {
         txt_total_item.innerHTML = ''
         container_expand_list.innerText = 'Tidak Ada Data'
@@ -216,9 +219,22 @@ function innerHTMLExpand(fullData) {
             return new Date(b.year, b.month, b.date).getTime() - new Date(a.year, a.month, a.date).getTime()
         })
 
-        txt_total_item.innerText = data.length + ' item'
+        txt_total_item.innerText = data.length + ' item';
 
+        let saveYear = 0;
         data.forEach((x, i) => {
+
+
+            if (x.year != saveYear) {
+                const div = document.createElement('div');
+                div.id = `div-year-${x.year}`;
+                div.classList.add('div-year')
+                container_expand_list.appendChild(div);
+
+                saveYear = x.year
+            }
+
+
 
             const div = document.createElement('div');
             const p = document.createElement('p');
@@ -230,7 +246,8 @@ function innerHTMLExpand(fullData) {
 
             checkBeforeOrAfter(x) ? div.classList.add('before'): undefined
 
-            container_expand_list.appendChild(div);
+            const container = document.getElementById(`div-year-${x.year}`)
+            container.appendChild(div);
             div.appendChild(p)
             p.appendChild(txt)
             p2.appendChild(txt2)
@@ -252,7 +269,8 @@ function expandElement() {
 }
 
 function validasiLengthInp(x, maxLength) {
-    x.value.length >= maxLength ? x.value = x.value.substr(0, maxLength): undefined
+    x.value.length >= maxLength ? x.value = x.value.substr(0,
+        maxLength): undefined
 
     return x.value
 }
@@ -262,9 +280,8 @@ function deleteItem(id, all) {
 
 
     if (all) {
-        const confirm = window.confirm('Apakah Anda Yakin Ingin Menghapus Semua Item?')
 
-        if (confirm) {
+        if (confirmAlert(10000, 99999)) {
             data = []
             alert('Berhasil Menghapus Semua Item')
         }
@@ -332,7 +349,9 @@ function makeId(data) {
         allid.push(x.id)
     })
 
-    allid.sort().forEach(x => {
+    allid.sort((b, a) => {
+        return b.harga - a.harga
+    }).forEach(x => {
         x == newId ? newId++: undefined
     })
 
@@ -400,13 +419,14 @@ function updFromServer() {
 
     req.onreadystatechange = () => {
         if (req.readyState == XMLHttpRequest.DONE) {
-            const pesan = JSON.parse(req.responseText);
-            if ('record' in pesan) {
+
+            if (req.responseText) {
+                pesan = JSON.parse(req.responseText);
                 const data = pesan.record
                 updateDataToLS(data)
                 window.location.reload()
             } else {
-                alert('FAILED UPDATE FROM SERVER : ' + pesan.message)
+                alert('FAILED : please check your internet connection')
             }
         }
     };
@@ -414,4 +434,17 @@ function updFromServer() {
     req.open("GET", "https://api.jsonbin.io/v3/b/62d5734ab34ef41b73c7124f/", true);
     req.setRequestHeader("X-Master-Key", "$2b$10$ccGM0WKEWD0bdaANFD7LIOqliu3Hy5EaDIntILvgs3hdFm7Egk9Te");
     req.send();
+}
+
+function confirmAlert(min, max) {
+
+    const randomNum = Math.round(Math.random() * (max - min) + min);
+    const cek = prompt('Masukkan Angka ' + randomNum)
+
+    if (cek == randomNum) {
+        return true
+    } else {
+        alert('input salah');
+        return false
+    }
 }
