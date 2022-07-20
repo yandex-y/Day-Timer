@@ -41,6 +41,7 @@ body > h1 {
     padding: 4rem 4rem;
     border-radius: .6rem;
     border-top: 1.75rem solid white;
+    overflow: hidden;
 }
 .input_form {
     display: flex;
@@ -126,7 +127,7 @@ input[type=search] {
 .container-expand button {
     background-color: rgb(255,86,101);
     color: white;
-    padding: 14px 22px;
+    padding: 17px 25px;
     border-radius: 5px;
     margin: 50px 0;
     font-size: 1.3rem;
@@ -134,12 +135,22 @@ input[type=search] {
 .container-expand-list {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 3.3rem;
+}
+.div-year{
+    background: #F4F7FF;
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+    padding: 2rem;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
 }
 .before {
     color: rgba(255,86,101,.37);
 }
-.container-expand-list > div > p:first-child {
+.container-expand-list > div > div > p:first-child {
     font-weight: bold;
 }
 .delete-all-item {
